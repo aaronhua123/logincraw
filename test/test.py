@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2019/10/12 16:07
 # @Author  : aaronhua
-
-import threading
-import time
+import random
 from logincraw import BaseCraw, session
 app = BaseCraw(__name__)
 
 @app.login
 def login():
     session.get('https://www.baidu.com')
+    print('login')
     return session # 必须return session
 
 # 带参数 gin = login()(gin)
@@ -22,38 +21,37 @@ def whether_login(session):
     :return:True or False
     '''
     r = session.get('https://www.baidu.com')
-    return r is 'logined' or r.status_code==200
+    print('check')
+    return random.choice([True,False])
+    # return r is 'logined' or r.status_code==200
 
-@app.protect()
+@app.protect
 def craw_a():
-    for i in range(1):
-        print('i am running craw_a',threading.currentThread().name)
-        time.sleep(0.5)
-    return 'crawling'
+    r = session.get('https://www.baidu.com')
+    print('a',r.status_code)
 
-@app.protect()
+@app.protect
 def craw_b():
-    for i in range(1):
-        print('i am running craw_b',threading.currentThread().name)
-        time.sleep(0.5)
-    return 'crawling'
+    r = session.get('https://www.baidu.com')
+    print('b',r.status_code)
 
 @app.main(thread = 3)
 def main1():
-    for i in range(1):
-        craw_b()
-        craw_a()
+    for i in range(10):
         craw_b()
 
-@app.main(thread = 2)
+
+@app.main(thread = 9)
 def main2():
-    for i in range(1):
+    for i in range(10):
         craw_a()
-        craw_b()
-        craw_a()
+
 
 if __name__ == '__main__':
     # app.debug = True
-    app.run() # 全局运行，所有checklogin就是
+    # print(login())
+    app.run() # 全局运行，所有main就是
     # main.__wrapped__()
     # start_craw() # 检测login，登录测试
+    # main1()
+    # craw_a()
