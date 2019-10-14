@@ -3,13 +3,13 @@
 # @Author  : aaronhua
 import datetime
 import sched,time
+
 def schedapp(func,config):
     s = sched.scheduler(time.time, time.sleep)
     now = datetime.datetime.now()
     taskdate = now.replace(**config)
     s.enterabs(taskdate.timestamp(), 0, func)
     s.run()
-
 
 class Sched:
     s = sched.scheduler(time.time, time.sleep)

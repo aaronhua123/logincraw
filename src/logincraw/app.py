@@ -1,18 +1,21 @@
 import json
+import sched
+import time
 from abc import ABC
 from concurrent.futures import ThreadPoolExecutor
 import requests
 from functools import wraps
-
 from logincraw.sched_app import schedapp
 from .session_convert import SessionToList, ListToSession
 from .session_db import sessinoDb
 session = requests.Session()
+ss = sched.scheduler(time.time, time.sleep)
 
 class BaseCraw(ABC):
     def __init__(self, name):
         self.name = name
         self.route = {}
+        self.priority = {}
         self.debug = False
 
     def login(self,func):
@@ -103,7 +106,7 @@ class BaseCraw(ABC):
             # 原函数储存在 route 方法内
             self.route[func.__name__]['function'] = func #
             # print(self.route)
-            # return func
+            return func
         return wrapper
 
     def sched(self,config):
@@ -112,3 +115,14 @@ class BaseCraw(ABC):
                 schedapp(self.run,config)
         else:
             schedapp(self.run, config)
+
+
+    def enter(self,priority):
+        def decorator(func):
+            self.priority[id(func)] = priority
+            print(self.priority)
+            def wrapper():
+                dofunc,args = func()
+                return s.enter(0,priority,dofunc,argument=args)
+            return wrapper
+        return decorator

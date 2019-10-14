@@ -9,5 +9,5 @@
 # 5、提供兼容多线程的爬虫方式
 # 6、session的本地化，极大的方便调试
 from .app import BaseCraw,session
-from .sched_app import Sched
+from .sched_app import schedapp
 

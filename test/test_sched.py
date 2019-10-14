@@ -3,18 +3,15 @@
 # @Author  : aaronhua
 
 # 去管理app，web的方式配置采集参数？？？ 还是说在线下配？ 启动停止、定时启动。
-from logincraw import Sched
+from logincraw import schedapp
+from test_baidu import app
 
-sch = Sched()
 config = {
-    'day': '*',
-    'hour': 14,
-    'minute': 33,
+    'hour': 20,
+    'minute': 18,
     'second': 0,
     'microsecond': 0
 }
 
-def run():
-    print("i run")
+schedapp(app.run,config)
 
-run()
