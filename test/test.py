@@ -4,7 +4,6 @@
 import random
 from logincraw import BaseCraw, session
 app = BaseCraw(__name__)
-
 @app.login
 def login():
     session.get('https://www.baidu.com')
@@ -46,12 +45,16 @@ def main2():
     for i in range(10):
         craw_a()
 
+# 多线程模式是连续的多个分散的任务，分配到少量线程的
+# 事件调度是任务的启动时间设定
 
 if __name__ == '__main__':
     # app.debug = True
     # print(login())
-    app.run() # 全局运行，所有main就是
+    # app.run() # 全局运行，所有main就是
     # main.__wrapped__()
     # start_craw() # 检测login，登录测试
     # main1()
     # craw_a()
+    print(__name__)
+    print(__file__)

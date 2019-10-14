@@ -3,12 +3,13 @@ from abc import ABC
 from concurrent.futures import ThreadPoolExecutor
 import requests
 from functools import wraps
+
+from logincraw.sched_app import schedapp
 from .session_convert import SessionToList, ListToSession
 from .session_db import sessinoDb
 session = requests.Session()
 
 class BaseCraw(ABC):
-
     def __init__(self, name):
         self.name = name
         self.route = {}
@@ -104,3 +105,10 @@ class BaseCraw(ABC):
             # print(self.route)
             # return func
         return wrapper
+
+    def sched(self,config):
+        if config.day=='*':
+            while True:
+                schedapp(self.run,config)
+        else:
+            schedapp(self.run, config)
