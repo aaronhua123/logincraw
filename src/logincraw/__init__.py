@@ -8,6 +8,6 @@
 # 4、对于登陆时敏感的，对登录次数有限制
 # 5、提供兼容多线程的爬虫方式
 # 6、session的本地化，极大的方便调试
-from .app import BaseCraw,session,ThreadCraw
+# from .app import BaseCraw,session,ThreadCraw
 # from .sched_app import schedapp
 

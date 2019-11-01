@@ -16,15 +16,6 @@ class SqLiteDB(object):
         print(tablename)
         os.makedirs(tablename, exist_ok=True)
         self.db = tablename + '/session.db'
-        # print('链接数据库')
-        # print('操作成功')
-        # self.checksession()
-# 单例模式
-    # def __new__(cls, *args, **kwargs):
-    #     if not hasattr(SqLiteDB, "_instance"):
-    #         if not hasattr(SqLiteDB, "_instance"):
-    #             SqLiteDB._instance = object.__new__(cls)
-    #     return SqLiteDB._instance
 
     def checksession(self):
         '''

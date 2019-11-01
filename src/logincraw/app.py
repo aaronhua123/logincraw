@@ -120,12 +120,6 @@ class BaseCraw(ABC):
 
         return wrapper
 
-    def sched(self, config):
-        if config.day == '*':
-            while True:
-                schedapp(self.run, config)
-        else:
-            schedapp(self.run, config)
 
 
 
